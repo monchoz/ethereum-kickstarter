@@ -1,3 +1,3 @@
 # Ethereum Kickstarter
 
-Kickstarter clone built over Ethereum
+Kickstarter clone with Ethereum and Solidity
