@@ -1,11 +1,11 @@
 pragma solidity ^0.4.17;
 
-contract CompaignFactory {
+contract CampaignFactory {
     // A factory contributes to the deployment automation of smart contracts
     address[] public deployedCampaigns;
 
     function createCampaign(uint minimum) public {
-        address newCampaign = new Campaing(minimum, msg.sender);
+        address newCampaign = new Campaign(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
 
@@ -14,7 +14,7 @@ contract CompaignFactory {
     }
 }
 
-contract Campaing {
+contract Campaign {
     struct Request {
         string description;
         uint value;
@@ -25,7 +25,7 @@ contract Campaing {
     } // manager's request to send spend money
 
     Request[] public requests;
-    address public manager; // campaing manager
+    address public manager; // campaign manager
     uint public minimumContribution; // minimum donation required to be considered a contribution
     mapping(address => bool) public approvers; // addresses who have donated money
     uint public approversCount; // keeps track of donators
@@ -36,7 +36,7 @@ contract Campaing {
         _;
     }
 
-    function Campaing(uint minimum, address sender) public {
+    function Campaign(uint minimum, address sender) public {
         manager = sender;
         minimumContribution = minimum;
     }
