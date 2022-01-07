@@ -3,6 +3,7 @@ import { Form, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
+import { Link, Router } from "../../routes";
 
 class CampaignNew extends Component {
   state = {
@@ -17,12 +18,16 @@ class CampaignNew extends Component {
     this.setState({ loading: true });
 
     try {
+      // Get user accounts
       const accounts = await web3.eth.getAccounts();
+      // Send request to the Blockchain (takes a while)
       await factory.methods
         .createCampaign(this.state.minimumContribution)
         .send({
           from: accounts[0],
         });
+      // Redirect user to the index route
+      Router.pushRoute("/");
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

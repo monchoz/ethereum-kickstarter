@@ -76,4 +76,13 @@ typings/
 .fusebox/
 
 .DS_Store
+
 .vscode
+
+build
+
+# Next build's output directory
+out
+
+# Firebase
+.firebase
