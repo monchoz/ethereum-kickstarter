@@ -6,19 +6,15 @@ const Header = () => {
   return (
     <Menu style={{ marginTop: "10px" }}>
       <Link route="/">
-        <a className="item">
-          CryptoFund
-          <Icon name="bitcoin" size="large" />
-        </a>
+        <a className="item">Home</a>
       </Link>
 
       <Menu.Menu position="right">
-        <Link route="/">
-          <a className="item">Campaigns</a>
-        </Link>
-
         <Link route="/campaigns/new">
-          <a className="item">+</a>
+          <a className="item">
+            <Icon name="add circle" size="large" />
+            Create Campaign
+          </a>
         </Link>
 
         <a href="https://github.com/monchoz" target="_blank" className="item">
