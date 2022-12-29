@@ -1,15 +1,16 @@
-pragma solidity ^0.4.17;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.17;
 
 contract CampaignFactory {
     // A factory contributes to the deployment automation of smart contracts
     address[] public deployedCampaigns;
 
     function createCampaign(uint minimum) public {
-        address newCampaign = new Campaign(minimum, msg.sender);
-        deployedCampaigns.push(newCampaign);
+        Campaign newCampaign = new Campaign(minimum, msg.sender);
+        deployedCampaigns.push(address(newCampaign));
     }
 
-    function getDeployedCampaigns() public view returns (address[]) {
+    function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
     }
 }
@@ -18,7 +19,7 @@ contract Campaign {
     struct Request {
         string description;
         uint value;
-        address recipient;
+        address payable recipient;
         bool complete;
         uint approvalCount;
         mapping(address => bool) approvals;
@@ -36,7 +37,7 @@ contract Campaign {
         _;
     }
 
-    function Campaign(uint minimum, address sender) public {
+    constructor(uint minimum, address sender) {
         manager = sender;
         minimumContribution = minimum;
     }
@@ -50,18 +51,15 @@ contract Campaign {
         approversCount++;
     }
 
-    function createRequest(string description, uint value, address recipient)
+    function createRequest(string memory description, uint value, address payable recipient)
         public restricted
     {
-        Request memory newRequest = Request({
-            description: description,
-            value: value,
-            recipient: recipient,
-            complete: false,
-            approvalCount: 0
-        });
-
-        requests.push(newRequest);
+        Request storage newRequest = requests.push();
+        newRequest.description = description;
+        newRequest.value = value;
+        newRequest.recipient = recipient;
+        newRequest.complete = false;
+        newRequest.approvalCount = 0;
     }
 
     // lookup the request wanting to be approved
@@ -89,5 +87,23 @@ contract Campaign {
         request.recipient.transfer(request.value);
         // set a request as complete
         requests[index].complete = true;
+    }
+
+    /* This function returns various statistics about campaigns */
+    function getSummary() public view returns (
+        uint, uint, uint, uint, address
+    ) {
+        return (
+            minimumContribution,
+            // amount of money that the contract has available
+            address(this).balance,
+            requests.length,
+            approversCount,
+            manager
+        );
+    }
+
+    function getRequestsCount() public view returns (uint) {
+        return requests.length;
     }
 }
