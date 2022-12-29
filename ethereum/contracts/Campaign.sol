@@ -95,8 +95,7 @@ contract Campaign {
     ) {
         return (
             minimumContribution,
-            // amount of money that the contract has available
-            address(this).balance,
+            address(this).balance, // amount of money that the contract has available
             requests.length,
             approversCount,
             manager
