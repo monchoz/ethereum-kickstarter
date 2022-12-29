@@ -4,7 +4,7 @@ const compiledFactory = require("./build/CampaignFactory.json");
 
 const provider = new HDWalletProvider(
   "outdoor debris cannon sport discover toward miss rain book captain fish destroy",
-  "https://rinkeby.infura.io/v3/fd73fb97e2e74aa1a303cbaeed05806e"
+  "https://goerli.infura.io/v3/d55fa3c71bb5446f95875cd46984ee3f"
 );
 const web3 = new Web3(provider);
 
