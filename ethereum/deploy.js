@@ -4,7 +4,7 @@ const compiledFactory = require("./build/CampaignFactory.json");
 
 const provider = new HDWalletProvider(
   "outdoor debris cannon sport discover toward miss rain book captain fish destroy",
-  "https://rinkeby.infura.io/v3/fd73fb97e2e74aa1a303cbaeed05806e"
+  "https://sepolia.infura.io/v3/d55fa3c71bb5446f95875cd46984ee3f"
 );
 const web3 = new Web3(provider);
 
@@ -13,11 +13,9 @@ const deploy = async () => {
 
   console.log("Attempting to deploy from account", accounts[0]);
 
-  const result = await new web3.eth.Contract(
-    JSON.parse(compiledFactory.interface)
-  )
-    .deploy({ data: compiledFactory.bytecode })
-    .send({ gas: "1000000", from: accounts[0] });
+  const result = await new web3.eth.Contract(compiledFactory.abi)
+    .deploy({ data: compiledFactory.evm.bytecode.object })
+    .send({ gas: "3000000", from: accounts[0] });
 
   console.log("Contract deployed to", result.options.address);
   provider.engine.stop();

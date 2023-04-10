@@ -42,12 +42,12 @@ class CampaignIndex extends Component {
           </Link>
           <h2
             style={{ marginTop: "2em", marginBottom: "2em" }}
-            class="ui header"
+            className="ui header"
           >
             <Icon name="ethereum" size="large" />
-            <div class="content">
+            <div className="content">
               CryptoFund
-              <div class="sub header">
+              <div className="sub header">
                 Kickstarter clone made with the Ethereum Blockchain
               </div>
             </div>
