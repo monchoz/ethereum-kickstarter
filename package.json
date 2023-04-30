@@ -1,7 +1,7 @@
 {
-  "name": "kickstart",
+  "name": "kickstarter",
   "version": "1.0.0",
-  "description": "Kickstarter clone with Ethereum and Solidity",
+  "description": "Kickstarter clone with Ethereum, Solidity and NextJS",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
