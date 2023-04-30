@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "dev": "next dev",
-    "build": "next build && next export"
+    "build": "next build",
+    "start": "next start"
   },
   "author": "Ramon Zuniga (ramonzuniga9@gmail.com)",
   "license": "MIT",
