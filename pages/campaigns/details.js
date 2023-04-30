@@ -6,22 +6,25 @@ import web3 from "../../ethereum/web3";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from "../../routes";
 
-class CampaignDetails extends Component {
-  static async getInitialProps(props) {
-    const campaign = Campaign(props.query.address);
+export const getServerSideProps = async (context) => {
+  const { address } = context.query;
+  const campaign = Campaign(address);
 
-    const summary = await campaign.methods.getSummary().call();
+  const summary = await campaign.methods.getSummary().call();
 
-    return {
-      address: props.query.address,
+  return {
+    props: {
+      address: address,
       minimumContribution: summary[0],
       balance: summary[1],
       requestsCount: summary[2],
       approversCount: summary[3],
       manager: summary[4],
-    };
-  }
+    },
+  };
+};
 
+class CampaignDetails extends Component {
   renderCards() {
     const {
       balance,

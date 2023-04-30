@@ -83,6 +83,3 @@ build
 
 # Next build's output directory
 out
-
-# Firebase
-.firebase
