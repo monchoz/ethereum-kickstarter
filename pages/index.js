@@ -4,12 +4,12 @@ import factory from "../ethereum/factory";
 import Layout from "../components/Layout";
 import { Link } from "../routes";
 
-class CampaignIndex extends Component {
-  static async getInitialProps() {
-    const campaigns = await factory.methods.getDeployedCampaigns().call();
-    return { campaigns };
-  }
+export const getStaticProps = async () => {
+  const campaigns = await factory.methods.getDeployedCampaigns().call();
+  return { props: { campaigns } };
+};
 
+class CampaignIndex extends Component {
   renderCampaigns() {
     const items = this.props.campaigns.map((address) => {
       return {

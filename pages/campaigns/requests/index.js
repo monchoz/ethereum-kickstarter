@@ -5,26 +5,30 @@ import Layout from "../../../components/Layout";
 import Campaign from "../../../ethereum/campaign";
 import RequestRow from "../../../components/RequestRow";
 
+export const getServerSideProps = async (context) => {
+  const { address } = context.query;
+  const campaign = Campaign(address);
+  const requestCount = await campaign.methods.getRequestsCount().call();
+  const approversCount = await campaign.methods.approversCount().call();
+
+  const requests = await Promise.all(
+    Array(parseInt(requestCount))
+      .fill()
+      .map((element, index) => {
+        return campaign.methods.requests(parseInt(index)).call();
+      })
+  );
+
+  const serializedRequests = JSON.stringify(requests);
+
+  return {
+    props: { address, serializedRequests, requestCount, approversCount },
+  };
+};
+
 class RequestIndex extends Component {
-  static async getInitialProps(props) {
-    const { address } = props.query;
-    const campaign = Campaign(address);
-    const requestCount = await campaign.methods.getRequestsCount().call();
-    const approversCount = await campaign.methods.approversCount().call();
-
-    const requests = await Promise.all(
-      Array(parseInt(requestCount))
-        .fill()
-        .map((element, index) => {
-          return campaign.methods.requests(parseInt(index)).call();
-        })
-    );
-
-    return { address, requests, requestCount, approversCount };
-  }
-
   renderRows() {
-    return this.props.requests.map((request, index) => {
+    return JSON.parse(this.props.serializedRequests).map((request, index) => {
       return (
         <RequestRow
           key={index}
